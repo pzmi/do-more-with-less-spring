@@ -5,6 +5,7 @@ import io.github.pzmi.router.core.Router;
 import io.github.pzmi.router.core.SimpleTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -20,6 +21,10 @@ public class WebsocketHandler extends TextWebSocketHandler {
     private final ObjectMapper mapper;
     private WebsocketOut out;
 
+    // injected property from property file. when missing defaults to Hello
+    @Value("${websocket.welcomemessage:Hello}")
+    private String welcomeMessage;
+
     public WebsocketHandler(Router router, ObjectMapper mapper, WebsocketOut out) {
         this.router = router;
         this.mapper = mapper;
@@ -29,7 +34,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         out.register(session);
-        session.sendMessage(new TextMessage("Hello"));
+        session.sendMessage(new TextMessage(welcomeMessage));
     }
 
     @Override
