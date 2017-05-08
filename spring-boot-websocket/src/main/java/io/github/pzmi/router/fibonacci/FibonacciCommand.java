@@ -1,4 +1,4 @@
-package io.github.pzmi.simplerest.core;
+package io.github.pzmi.router.fibonacci;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -9,15 +9,15 @@ import java.math.BigDecimal;
 
 public class FibonacciCommand extends HystrixCommand<BigDecimal> {
     private static final UriTemplate uri = new UriTemplate("http://localhost:8080/fibonacci/{n}");
-    private long nth;
+    private int nth;
 
-    public FibonacciCommand(long nth) {
-        super(HystrixCommandGroupKey.Factory.asKey("General"));
+    public FibonacciCommand(int nth) {
+        super(HystrixCommandGroupKey.Factory.asKey("Fibonacci"));
         this.nth = nth;
     }
 
     @Override
-    protected BigDecimal run() throws Exception {
+    protected BigDecimal run() {
         RestTemplate r = new RestTemplate();
         return r.getForObject(uri.expand(nth), BigDecimal.class);
     }

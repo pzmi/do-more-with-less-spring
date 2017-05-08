@@ -1,8 +1,8 @@
-package io.github.pzmi.websocket;
+package io.github.pzmi.router.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.pzmi.simplerest.core.Router;
-import io.github.pzmi.simplerest.core.SimpleTextMessage;
+import io.github.pzmi.router.core.Router;
+import io.github.pzmi.router.core.SimpleTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -39,24 +39,25 @@ public class WebsocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        Optional<EchoMessage> deserialized = deserialize(message);
+        Optional<WsMessage> deserialized = deserialize(message);
         if (deserialized.isPresent()) {
-            deserialized.map(m -> of(session, m)).ifPresent(m -> router.route("reverser", m));
+            WsMessage wsMessage = deserialized.get();
+            router.route(wsMessage.getService(), of(session, wsMessage));
         } else {
             out.send(session, new TextMessage("Command not supported"));
         }
     }
 
-    private Optional<EchoMessage> deserialize(TextMessage message) {
+    private Optional<WsMessage> deserialize(TextMessage message) {
         try {
-            return Optional.of(mapper.readValue(message.getPayload(), EchoMessage.class));
+            return Optional.of(mapper.readValue(message.getPayload(), WsMessage.class));
         } catch (IOException e) {
             LOG.warn("Could not deserialize received message", e);
             return Optional.empty();
         }
     }
 
-    private SimpleTextMessage of(WebSocketSession session, EchoMessage m) {
-        return new SimpleTextMessage(Integer.toString(session.hashCode()), "reverser", m.getToEcho());
+    private SimpleTextMessage of(WebSocketSession session, WsMessage m) {
+        return new SimpleTextMessage(Integer.toString(session.hashCode()), m.getService(), m.getPayload());
     }
 }

@@ -1,4 +1,4 @@
-package io.github.pzmi.simplerest.core;
+package io.github.pzmi.router.core;
 
 public class SimpleTextMessage implements Message {
     private final String sender;

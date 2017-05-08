@@ -1,6 +1,6 @@
 package io.github.pzmi.simplerest.rest;
 
-import io.github.pzmi.simplerest.core.FibonacciCommand;
+import io.github.pzmi.core.FibonacciCommand;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

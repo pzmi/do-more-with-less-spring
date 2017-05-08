@@ -1,4 +1,4 @@
-package io.github.pzmi.simplerest.core;
+package io.github.pzmi.router.core;
 
 import java.util.HashMap;
 import java.util.Map;

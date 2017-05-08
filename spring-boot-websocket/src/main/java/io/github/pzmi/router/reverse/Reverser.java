@@ -1,17 +1,18 @@
-package io.github.pzmi.reverse;
+package io.github.pzmi.router.reverse;
 
-import io.github.pzmi.simplerest.core.Message;
-import io.github.pzmi.simplerest.core.Observer;
-import io.github.pzmi.simplerest.core.Route;
-import io.github.pzmi.simplerest.core.SimpleTextMessage;
+import io.github.pzmi.router.core.Message;
+import io.github.pzmi.router.core.Observer;
+import io.github.pzmi.router.core.Route;
+import io.github.pzmi.router.core.SimpleTextMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class Reverser implements Route {
-    private List<Observer> observers = new ArrayList<>();
+    private List<Observer> observers = new CopyOnWriteArrayList<>();
 
     private static Message responseOf(Message message) {
         String response = new StringBuilder(message.getBody()).reverse().toString();
@@ -31,6 +32,6 @@ public class Reverser implements Route {
 
     @Override
     public void register(Observer observer) {
-
+        observers.add(observer);
     }
 }

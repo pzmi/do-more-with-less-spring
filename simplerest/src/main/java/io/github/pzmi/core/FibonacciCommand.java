@@ -1,4 +1,4 @@
-package io.github.pzmi.fibonacci;
+package io.github.pzmi.core;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 
 public class FibonacciCommand extends HystrixCommand<BigDecimal> {
     private static final UriTemplate uri = new UriTemplate("http://localhost:8080/fibonacci/{n}");
-    private int nth;
+    private long nth;
 
-    public FibonacciCommand(int nth) {
+    public FibonacciCommand(long nth) {
         super(HystrixCommandGroupKey.Factory.asKey("General"));
         this.nth = nth;
     }
