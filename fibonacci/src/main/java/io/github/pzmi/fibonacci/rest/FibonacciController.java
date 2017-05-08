@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
+// super simple rest endpoint
 @RequestMapping("/fibonacci")
 @RestController
 public class FibonacciController {

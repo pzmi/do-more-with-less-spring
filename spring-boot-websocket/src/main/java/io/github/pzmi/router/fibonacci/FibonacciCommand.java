@@ -8,6 +8,7 @@ import org.springframework.web.util.UriTemplate;
 import java.math.BigDecimal;
 
 public class FibonacciCommand extends HystrixCommand<BigDecimal> {
+    // parametrized uris
     private static final UriTemplate uri = new UriTemplate("http://localhost:8080/fibonacci/{n}");
     private int nth;
 
