@@ -29,5 +29,6 @@ dependencies {
     compile group: 'io.prometheus', name: 'simpleclient', version: '0.0.21'
     compile group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.0.21'
     compile group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.0.21'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '1.2.0.RELEASE'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
